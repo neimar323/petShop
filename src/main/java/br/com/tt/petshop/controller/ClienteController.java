@@ -5,6 +5,7 @@ import br.com.tt.petshop.service.ClienteService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -19,7 +20,6 @@ public class ClienteController {
 
     @RequestMapping("/admin")
     public String inicial(Model model){
-        ClienteService clienteService;
         model.addAttribute("usuarioLogado",
                 "Gilberto");
         return "inicial";
@@ -33,11 +33,11 @@ public class ClienteController {
     @RequestMapping("/admin/cliente/salvar")
     public String salvar(Cliente cliente, Model model){
         this.clienteService.criar(cliente);
-        return "inicial";
+        return "redirect:/admin";
     }
 
     @RequestMapping("/admin/cliente/listar")
-    public String listar(Model model){
+    public String listar(Model model, @RequestParam String cpf){
         List<Cliente> lista = this.clienteService.listar();
         model.addAttribute("clientes", lista);
         return "/cliente/listar";

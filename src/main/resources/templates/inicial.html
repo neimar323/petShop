@@ -10,8 +10,13 @@
     <span th:text="${usuarioLogado}"></span>
 
     <h2>Menu:</h2>
-    <a th:href="@{/admin/cliente/cadastrar}">Cadastrar Cliente</a>
+    <h3>Clientes</h3>
+    <a th:href="@{/admin/cliente/cadastrar}">Cadastrar Cliente</a><br>
     <a th:href="@{/admin/cliente/listar}">Listar Clientes</a>
+
+    <h3>Unidades</h3>
+    <a th:href="@{/admin/unidade/cadastrar}">Cadastrar Unidade</a><br>
+    <a th:href="@{/admin/unidade/listar}">Listar Unidade</a>
 
 </body>
 </html>

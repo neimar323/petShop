@@ -5,12 +5,12 @@
     <title>Lista de Clientes</title>
 </head>
 <body>
-<ul>
-     <li th:each=" cli : ${clientes} ">
-       <span th:text="${cli.nome}"></span>
-        -
-        <span th:text="${cli.cpf}"></span>
-    </li>
-</ul>
+    <ul>
+         <li th:each=" cli : ${clientes} ">
+           <span th:text="${cli.nome}"></span>
+            -
+            <span th:text="${cli.cpf}"></span>
+        </li>
+    </ul>
 </body>
 </html>

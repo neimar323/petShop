@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Unidades</title>
+</head>
+<body>
+<ul>
+    <li th:each=" unidade : ${unidades} ">
+        <span th:text="${unidade.nomeFantasia}"></span>
+        -
+        <span th:text="${unidade.endereco}"></span>
+        <a th:href="@{/admin/unidade/excluir(nomeFantasia=${unidade.nomeFantasia})}">Excluir</a>
+
+    </li>
+</ul>
+</body>
+</html>

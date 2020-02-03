@@ -37,10 +37,15 @@ public class ClienteController {
     }
 
     @RequestMapping("/admin/cliente/listar")
-    public String listar(Model model, @RequestParam String cpf){
+    public String listar(Model model){
         List<Cliente> lista = this.clienteService.listar();
         model.addAttribute("clientes", lista);
         return "/cliente/listar";
     }
 
+    @RequestMapping("/admin/cliente/excluir")
+    public String excluir(@RequestParam Long id){
+        this.clienteService.excluir(id);
+        return "redirect:/admin/cliente/listar";
+    }
 }

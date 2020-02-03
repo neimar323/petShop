@@ -23,4 +23,7 @@ public class ClienteService {
         return this.clienteRepository.findAll();
     }
 
+    public void excluir(Long id) {
+        this.clienteRepository.deleteById(id);
+    }
 }

@@ -1,18 +1,33 @@
 package br.com.tt.petshop.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Cliente{
+    private long id;
     private String nome;
     private String cpf;
-    private String nascimento;
+    private LocalDate nascimento;
 
     public Cliente() {
     }
 
     public Cliente(String nome, String cpf, String nascimento) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        this.nascimento = LocalDate.parse(nascimento, formatter);
+
         this.nome = nome;
         this.cpf = cpf;
-        this.nascimento = nascimento;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
 
     public String getNome() {
         return nome;
@@ -30,11 +45,11 @@ public class Cliente{
         this.cpf = cpf;
     }
 
-    public String getNascimento() {
+    public LocalDate getNascimento() {
         return nascimento;
     }
 
-    public void setNascimento(String nascimento) {
+    public void setNascimento(LocalDate nascimento) {
         this.nascimento = nascimento;
     }
 }

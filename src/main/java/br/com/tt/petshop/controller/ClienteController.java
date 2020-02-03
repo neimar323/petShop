@@ -40,4 +40,11 @@ public class ClienteController {
         return "/cliente/listar";
     }
 
+    @RequestMapping("/admin/cliente/excluir")
+    public String excluir(Cliente cliente, Model model){
+        this.clienteService.excluir(cliente);
+
+        return inicial(model);
+    }
+
 }

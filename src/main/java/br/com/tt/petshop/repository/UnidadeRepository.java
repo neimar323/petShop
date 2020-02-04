@@ -28,6 +28,20 @@ public class UnidadeRepository {
         return unidadeSalva;
     }
 
+    public List<Unidade> buscaUnidadesPorNome(String nome){
+        return entityManager
+                .createQuery("select u From Unidade u where u.nome = :nome ")
+                .setParameter("nome", nome)
+                .getResultList();
+    }
+
+    public Unidade buscaUnidadesPorId(String id){
+        return (Unidade) entityManager
+                .createQuery("select u From Unidade u where u.id = :id ")
+                .setParameter("id", id)
+                .getSingleResult();
+    }
+
 //    private List<Unidade> db = new ArrayList<>();
 
     public Unidade save(Unidade unidade) {

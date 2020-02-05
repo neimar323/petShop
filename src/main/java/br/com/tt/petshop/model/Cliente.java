@@ -1,5 +1,6 @@
 package br.com.tt.petshop.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class Cliente {
 
 // Ex: 2020-01-01   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name = "nascimento")
     private LocalDate nascimento;
 

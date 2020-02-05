@@ -26,4 +26,8 @@ public class ClienteService {
     public void excluir(Long id) {
         this.clienteRepository.deleteById(id);
     }
+
+    public Cliente buscarPorId(Long id) {
+        return clienteRepository.findById(id);
+    }
 }

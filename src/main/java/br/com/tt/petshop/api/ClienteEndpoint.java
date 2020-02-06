@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -18,9 +19,17 @@ public class ClienteEndpoint {
         this.clienteService = clienteService;
     }
 
+//    @GetMapping
+//    public ResponseEntity<List<Cliente>> findAll(){
+//        return ResponseEntity.ok(clienteService.listar());
+//    }
+
     @GetMapping
-    public List<Cliente> findAll(){
-        return clienteService.listar();
+    public ResponseEntity<List<Cliente>> findAll(){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .header("X-SITUACAO", "Ativos")
+                .body(clienteService.listar());
     }
 
     @GetMapping("{id}")
@@ -29,8 +38,10 @@ public class ClienteEndpoint {
     }
 
     @PostMapping
-    public void create(@RequestBody Cliente cliente){
-        clienteService.criar(cliente);
+    public ResponseEntity create(@RequestBody Cliente cliente){
+        Cliente clienteSalvo = clienteService.criar(cliente);
+        URI uri = URI.create("/clientes/"+clienteSalvo.getId());
+        return ResponseEntity.created(uri).build();
     }
 
     @DeleteMapping("{id}")

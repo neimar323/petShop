@@ -31,11 +31,11 @@ public class UnidadeController {
         return "redirect:/admin";
     }
 
-    @RequestMapping("excluir")
-    public String excluir(Model model, @RequestParam String nomeFantasia){
-        unidadeService.excluir(nomeFantasia);
-        return "redirect:/admin";
-    }
+//    @RequestMapping("excluir")
+//    public String excluir(Model model, @RequestParam String nomeFantasia){
+//        unidadeService.excluir(nomeFantasia);
+//        return "redirect:/admin";
+//    }
     @RequestMapping("listar")
     public String listar(Model model){
         List<Unidade> lista = this.unidadeService.listar();

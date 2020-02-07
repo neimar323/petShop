@@ -21,9 +21,18 @@ public class UnidadeService {
 
     public List<Unidade> listar(){
         return unidadeRepository.findAll();
+
     }
 
-    public void excluir(String nomeFantasia) {
-        unidadeRepository.delete(nomeFantasia);
+    public Unidade buscaPorId(Long id) {
+        return unidadeRepository.findById(id);
     }
+
+    public void deletar(Long id) {
+        unidadeRepository.deleteById(id);
+    }
+
+//    public void excluir(String nomeFantasia) {
+//        unidadeRepository.delete(nomeFantasia);
+//    }
 }

@@ -1,21 +1,26 @@
 package br.com.tt.petshop.repository;
 
 import br.com.tt.petshop.model.Unidade;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
 public class UnidadeRepository {
     private JdbcTemplate jdbcTemplate;
+    private EntityManager em;
 
-    public UnidadeRepository(JdbcTemplate jdbcTemplate) {
+    public UnidadeRepository(JdbcTemplate jdbcTemplate, EntityManager em) {
         this.jdbcTemplate = jdbcTemplate;
+        this.em = em;
     }
 
     public Unidade save(Unidade unidade){
-        String sql = "INSERT INTO unidade (nomeFantasia, endereco) VALUES (?, ?)";
+        String sql = "INSERT INTO unidade (nome_fantasia, endereco) VALUES (?, ?)";
 
         jdbcTemplate.update(sql,unidade.getNomeFantasia(), unidade.getEndereco());
 
@@ -23,18 +28,24 @@ public class UnidadeRepository {
     }
 
     public List<Unidade> findAll(){
-        String sql = "Select nomeFantasia, endereco from unidade";
-
-        List<Unidade> listaUnidades = jdbcTemplate.query(sql, new UnidadeRowMapper());
-
-        return listaUnidades;
+        return (List<Unidade>) em.createQuery("from Unidade ").getResultList();
     }
 
-    public void delete (String nomeFantasia){
-        String sql = "Delete From unidade where nomeFantasia = ?";
-
-        jdbcTemplate.update(sql,nomeFantasia);
-
+    public Unidade findById(Long id) {
+        return (Unidade)em.createQuery("from Unidade Where id = :id")
+                .setParameter("id", id)
+                .getSingleResult();
     }
+
+    @Modifying
+    @Transactional
+    public void deleteById(Long id) {
+        em.createQuery(" delete from Unidade where id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+
+
 
 }

@@ -58,4 +58,8 @@ public class Produto {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public LocalDate getCriacao() {
+        return criacao;
+    }
 }

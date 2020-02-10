@@ -1,5 +1,6 @@
 package br.com.tt.petshop.api;
 
+import br.com.tt.petshop.exception.NomeInvalidoException;
 import br.com.tt.petshop.model.Cliente;
 import br.com.tt.petshop.service.ClienteService;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,8 @@ public class ClienteEndpoint {
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody Cliente cliente){
+    public ResponseEntity create(@RequestBody Cliente cliente)
+            throws NomeInvalidoException {
         Cliente clienteSalvo = clienteService.criar(cliente);
         URI uri = URI.create("/clientes/"+clienteSalvo.getId());
         return ResponseEntity.created(uri).build();

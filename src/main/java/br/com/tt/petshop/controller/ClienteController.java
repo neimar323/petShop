@@ -1,5 +1,6 @@
 package br.com.tt.petshop.controller;
 
+import br.com.tt.petshop.exception.NomeInvalidoException;
 import br.com.tt.petshop.model.Cliente;
 import br.com.tt.petshop.service.ClienteService;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,11 @@ public class ClienteController {
 
     @RequestMapping("/admin/cliente/salvar")
     public String salvar(Cliente cliente, Model model){
-        this.clienteService.criar(cliente);
+        try {
+            this.clienteService.criar(cliente);
+        } catch (NomeInvalidoException e) {
+            //TODO mostrar mensagem ao usuário
+        }
         return "redirect:/admin";
     }
 

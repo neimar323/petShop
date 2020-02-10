@@ -13,6 +13,8 @@ import java.util.List;
 public class ClienteService {
 
     private static final Logger LOG = LoggerFactory.getLogger(ClienteService.class);
+    private static final int TAMANHO_MINIMO_PARTES = 2;
+    private static final int QUANTIDADE_MINIMA_PARTES = 2;
 
     private ClienteRepository clienteRepository;
 
@@ -20,22 +22,29 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-    public Cliente criar(Cliente cliente){
-        int quantidadePartes = cliente.getNome().split(" ").length;
+    public Cliente criar(Cliente cliente) throws NomeInvalidoException {
+        validarNomeCliente(cliente);
+        return this.clienteRepository.save(cliente);
+    }
 
-        if(quantidadePartes < 1){
+    private void validarNomeCliente(Cliente cliente) throws NomeInvalidoException {
+        String[] partes = cliente.getNome().split(" ");
+
+        int quantidadePartes = partes.length;
+
+        if(quantidadePartes < QUANTIDADE_MINIMA_PARTES){
             LOG.debug("Nome incompleto: {}", cliente.getNome());
             throw new NomeInvalidoException("Preencha seu nome completo");
         }
 
-        String[] partes = cliente.getNome().split(" ");
         for (String parte :partes) {
-            if(parte.length() <= 2){
-                System.out.println("Nome menor");
+            if(parte.length() <= TAMANHO_MINIMO_PARTES){
+                LOG.debug("Parte do nome menor que {}: {}",
+                        TAMANHO_MINIMO_PARTES,
+                        parte);
+                throw new NomeInvalidoException("Informe seu nome sem abreviações");
             }
         }
-
-        return this.clienteRepository.save(cliente);
     }
 
     public List<Cliente> listar(){

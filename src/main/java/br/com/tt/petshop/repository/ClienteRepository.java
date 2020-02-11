@@ -42,9 +42,11 @@ public class ClienteRepository {
     }
 
     public List<Cliente> findAll(){
-
-        return jdbcTemplate.query("select id, nome, cpf, nascimento from tb_cliente",
-                new ClienteRowMapper());
+        return entityManager
+                .createQuery("from Cliente")
+                .getResultList();
+//        return jdbcTemplate.query("select id, nome, cpf, nascimento from tb_cliente",
+//                new ClienteRowMapper());
 //        return db;
     }
 

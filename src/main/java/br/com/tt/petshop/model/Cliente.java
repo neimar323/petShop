@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_cliente")
@@ -26,6 +27,16 @@ public class Cliente {
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name = "nascimento")
     private LocalDate nascimento;
+
+//    @Column(name = "ID_UNIDADE")
+//    private Long idUnidade;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ID_UNIDADE")
+    private Unidade unidade;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<Animal> animais;
 
     public String getNome() {
         return nome;
@@ -63,5 +74,21 @@ public class Cliente {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Unidade getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(Unidade unidade) {
+        this.unidade = unidade;
+    }
+
+    public List<Animal> getAnimais() {
+        return animais;
+    }
+
+    public void setAnimais(List<Animal> animais) {
+        this.animais = animais;
     }
 }

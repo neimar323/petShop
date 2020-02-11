@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "tb_unidade")
+//Sempre adiciona esse WHERE a cada consulta realizada
+// @Where(clause = "tp_dado = 'CATEGORIA'")
 public class Unidade {
 
     @Id

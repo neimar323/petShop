@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/animais")
@@ -40,14 +40,53 @@ public class AnimalEndpoint {
         return ResponseEntity.ok(dto);
     }
 
-    public ResponseEntity findAll(){
-        List<Animal> listaAnimais = animalService.buscarTodos();
+    @GetMapping
+    public ResponseEntity<List<AnimalOutDto>> findAll(){
+//        List<Animal> listaAnimais = animalService.buscarTodos();
+//
+//        List<AnimalOutDto> listaDto = new ArrayList<AnimalOutDto>();
+//
+//        for (Animal animal: listaAnimais) {
+//            listaDto.add(new AnimalOutDto(animal));
+//        }
+//
+//        return ResponseEntity.ok(listaDto);
 
-        List<AnimalOutDto> listaDto = new ArrayList<AnimalOutDto>();
-        for (Animal animal: listaAnimais) {
-            new AnimalOutDto(animal);
-        }
-
-        return null;
+        return ResponseEntity.ok(animalService
+                .buscarTodos().stream()
+                .map(AnimalOutDto::new)
+                .collect(Collectors.toList()));
     }
+
+//    concatena valores
+////        String nomes = animalService
+////                .buscarTodos().stream()
+////                .map(animal -> new AnimalOutDto(animal))
+////                .map(AnimalOutDto::getNome)
+////                .collect(Collectors.joining(","));
+
+//    private void somaValores(){
+//        BigDecimal um;
+//        BigDecimal dois;
+//        BigDecimal tres;
+//
+//        BigDecimal soma = BigDecimal.ZERO;
+//
+//        if(um != null){
+//            soma = soma.add(um);
+//        }
+//
+//        if(dois != null){
+//            soma = soma.add(dois);
+//        }
+//
+//        if(tres != null){
+//            soma = soma.add(tres);
+//        }
+//
+//        soma = Stream.of(um, dois, tres)
+//        .filter(Objects::nonNull)
+//        .reduce(BigDecimal::add)
+//        .orElse(BigDecimal.ZERO);
+//    }
 }

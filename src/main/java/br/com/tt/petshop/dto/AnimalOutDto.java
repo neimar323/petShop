@@ -15,7 +15,7 @@ public class AnimalOutDto {
     private String clienteNome;
 
     public AnimalOutDto(Animal entidade) {
-        id = entidade.getId();
+        this.id = entidade.getId();
         nome = entidade.getNome();
         nascimento = entidade.getNascimento();
         clienteNome = entidade.getCliente().getNome();

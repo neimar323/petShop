@@ -1,14 +1,14 @@
 package br.com.tt.petshop.api;
 
+import br.com.tt.petshop.dto.AnimalInDto;
 import br.com.tt.petshop.dto.AnimalOutDto;
 import br.com.tt.petshop.model.Animal;
 import br.com.tt.petshop.service.AnimalService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,9 +18,11 @@ import java.util.stream.Collectors;
 public class AnimalEndpoint {
 
     private AnimalService animalService;
+    private ModelMapper modelMapper;
 
-    public AnimalEndpoint(AnimalService animalService) {
+    public AnimalEndpoint(AnimalService animalService, ModelMapper modelMapper) {
         this.animalService = animalService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/{id}")
@@ -89,4 +91,18 @@ public class AnimalEndpoint {
 //        .reduce(BigDecimal::add)
 //        .orElse(BigDecimal.ZERO);
 //    }
+
+
+    @PostMapping
+    public ResponseEntity criar(@RequestBody AnimalInDto animalDto){
+        
+        Animal animal = modelMapper.map(animalDto, Animal.class);
+
+        Animal animalSalvo = this.animalService.salvar(animal);
+
+        return ResponseEntity
+                .created(URI.create("/animais/"+animalSalvo.getId()))
+                .build();
+    }
+
 }

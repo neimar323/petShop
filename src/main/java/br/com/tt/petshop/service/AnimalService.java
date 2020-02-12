@@ -23,4 +23,8 @@ public class AnimalService {
     public List<Animal> buscarTodos(){
         return this.animalRepository.findAll();
     }
+
+    public Animal salvar(Animal animal) {
+        return this.animalRepository.save(animal);
+    }
 }

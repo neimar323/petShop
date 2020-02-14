@@ -3,13 +3,22 @@ package br.com.tt.petshop.dto;
 import br.com.tt.petshop.model.Animal;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 
 public class AnimalInDto {
 
+    @NotBlank(message = "N nome deve ser preenchido!")
     private String nome;
+
+    @NotNull(message="Informe a data de nascimento")
+    @Past(message="O nascimento não pode ser futuro")
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate nascimento;
+
+    @NotNull(message="id cliente nao deve ser null")
     private Long clienteId;
 
     public String getNome() {

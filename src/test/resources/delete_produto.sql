@@ -1,0 +1,1 @@
+delete tb_produto;

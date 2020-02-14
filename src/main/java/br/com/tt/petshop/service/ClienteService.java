@@ -1,10 +1,13 @@
 package br.com.tt.petshop.service;
 
+import br.com.tt.petshop.client.ApiCreditoClient;
+import br.com.tt.petshop.client.dto.SituacaoCreditoDto;
 import br.com.tt.petshop.exception.NomeInvalidoException;
 import br.com.tt.petshop.model.Cliente;
 import br.com.tt.petshop.repository.ClienteRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,15 +18,17 @@ public class ClienteService {
     private static final Logger LOG = LoggerFactory.getLogger(ClienteService.class);
     private static final int TAMANHO_MINIMO_PARTES = 2;
     private static final int QUANTIDADE_MINIMA_PARTES = 2;
-
+    @Autowired
     private ClienteRepository clienteRepository;
-
-    public ClienteService(ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
-    }
+    @Autowired
+    private ApiCreditoClient apiCreditoclient;
 
     public Cliente criar(Cliente cliente) throws NomeInvalidoException {
         validarNomeCliente(cliente);
+        SituacaoCreditoDto situacaoCreditoDto = apiCreditoclient.verificaSituacao(cliente.getCpf());
+        if(situacaoCreditoDto.getSituacao().equals("NEGATIVADO")){
+            throw new IllegalArgumentException("Cliente negativado");
+        }
         return this.clienteRepository.save(cliente);
     }
 

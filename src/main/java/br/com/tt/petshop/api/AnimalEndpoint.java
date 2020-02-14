@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -94,7 +95,7 @@ public class AnimalEndpoint {
 
 
     @PostMapping
-    public ResponseEntity criar(@RequestBody AnimalInDto animalDto){
+    public ResponseEntity criar(@RequestBody @Valid AnimalInDto animalDto){
         
         Animal animal = modelMapper.map(animalDto, Animal.class);
 

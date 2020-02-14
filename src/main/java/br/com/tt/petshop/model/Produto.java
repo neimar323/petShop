@@ -31,6 +31,18 @@ public class Produto {
     @CreatedDate
     private LocalDate criacao;
 
+    public void setCriacao(LocalDate criacao) {
+        this.criacao = criacao;
+    }
+
+    public LocalDate getAlteracao() {
+        return alteracao;
+    }
+
+    public void setAlteracao(LocalDate alteracao) {
+        this.alteracao = alteracao;
+    }
+
     @Column(name = "alteracao")
     @LastModifiedDate
     private LocalDate alteracao;
